@@ -1,0 +1,14 @@
+Flask==0.10.1
+Flask-Classy==0.6.10
+Flask-RethinkDB==0.2
+Flask-Script==0.6.7
+Flask-WTF==0.9.5
+Jinja2==2.7.2
+MarkupSafe==0.19
+WTForms==1.0.5
+Werkzeug==0.9.4
+gunicorn==18.0
+itsdangerous==0.24
+protobuf==2.5.0
+rethinkdb==1.12.0-0
+wsgiref==0.1.2
