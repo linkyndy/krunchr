@@ -2,6 +2,7 @@ import os
 
 
 DEBUG = os.environ['DEBUG']
+SECRET_KEY = os.environ['SECRET_KEY']
 
 RETHINKDB_HOST = os.environ['RETHINKDB_HOST']
 RETHINKDB_PORT = os.environ['RETHINKDB_PORT']

@@ -1,8 +1,9 @@
 import rethinkdb as r
-from flask import render_template
+from flask import redirect, render_template, url_for
 from flask.ext.classy import FlaskView, route
 
 from visualizer import db
+from visualizer.forms import DatasetAddForm
 
 
 class DatasetView(FlaskView):
@@ -14,10 +15,16 @@ class DatasetView(FlaskView):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
         return render_template('datasets/get.html', dataset=dataset)
 
+    @route('/add', methods=['GET', 'POST'])
     def post(self):
-        pass
+        form = DatasetAddForm()
+        if form.validate_on_submit():
+            r.table('datasets').insert(
+                {'name': form.name.data, 'url': form.url.data}).run(db.conn)
+            return redirect(url_for('DatasetView:index'))
+        return render_template('datasets/post.html', form=form)
 
-    @route('/<ds_id>/visualizations/')
+    @route('/<ds_id>/visualizations')
     def visualizations(self, ds_id):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
         visualizations = list(r.table('visualizations').filter(
