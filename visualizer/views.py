@@ -1,2 +1,37 @@
-from flask.ext.classy import FlaskView
+import rethinkdb as r
+from flask import render_template
+from flask.ext.classy import FlaskView, route
 
+from visualizer import db
+
+
+class DatasetView(FlaskView):
+    def index(self):
+        datasets = list(r.table('datasets').run(db.conn))
+        return render_template('datasets/index.html', datasets=datasets)
+
+    def get(self, ds_id):
+        dataset = r.table('datasets').get(ds_id).run(db.conn)
+        return render_template('datasets/get.html', dataset=dataset)
+
+    def post(self):
+        pass
+
+    @route('/<ds_id>/visualizations/')
+    def visualizations(self, ds_id):
+        dataset = r.table('datasets').get(ds_id).run(db.conn)
+        visualizations = list(r.table('visualizations').filter(
+            {'dataset_id': ds_id}).run(db.conn))
+        return render_template('datasets/visualizations.html',
+            dataset=dataset, visualizations=visualizations)
+
+    @route('/<ds_id>/visualizations/<v_id>')
+    def visualization(self, ds_id, v_id):
+        dataset = r.table('datasets').get(ds_id).run(db.conn)
+        visualization = r.table('visualizations').get(v_id).run(db.conn)
+        return render_template('datasets/visualization.html',
+            dataset=dataset, visualization=visualization)
+
+    @route('/<ds_id>/visualizations/<v_id>', methods=['POST'])
+    def post_visualization(self, ds_id, v_id):
+        pass

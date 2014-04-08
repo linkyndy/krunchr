@@ -1,0 +1,16 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+    {% if dataset %}
+        <p>{{ dataset.name }}, {{ dataset.url }}</p>
+        {% if visualizations %}
+            {% for visualization in visualizations %}
+                <p>{{ visualization.name }}</p>
+            {% endfor %}
+        {% else %}
+            <p>No visualizations</p>
+        {% endif %}
+    {% else %}
+        <p>Invalid dataset</p>
+    {% endif %}
+{% endblock %}

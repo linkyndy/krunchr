@@ -1,0 +1,11 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+    {% if datasets %}
+        {% for dataset in datasets %}
+            <p>{{ dataset.name }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No datasets</p>
+    {% endif %}
+{% endblock %}
