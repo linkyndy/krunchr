@@ -1,13 +1,21 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
+    <h3>
+        Datasets
+        <a href="{{ url_for('DatasetView:post') }}" class="btn btn-embossed btn-primary pull-right">Upload dataset</a>
+    </h3>
+
+    <hr>
+
     {% if datasets %}
         {% for dataset in datasets %}
-            {{ dataset.name }}
-            <a href="{{ url_for('DatasetView:get', ds_id=dataset.id) }}">View dataset</a>
+            <p>
+                <a href="{{ url_for('DatasetView:get', ds_id=dataset.id) }}">{{ dataset.name }}</a>
+            </p>
+            {% if not loop.last %}<hr>{% endif %}
         {% endfor %}
     {% else %}
-        No datasets
+        <p>There are currently no datasets in our system. Be the first to upload one!</p>
     {% endif %}
-    <a href="{{ url_for('DatasetView:post') }}">Add dataset</a>
 {% endblock %}

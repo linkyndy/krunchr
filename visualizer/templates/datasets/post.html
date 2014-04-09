@@ -2,10 +2,21 @@
 {% from "helpers.html" import render_field %}
 
 {% block content %}
-    <form action="{{ url_for('DatasetView:post') }}" method="post">
-        {{ form.hidden_tag() }}
-        {{ render_field(form.name) }}
-        {{ render_field(form.url) }}
-        <input type="submit" value="Add dataset">
-    </form>
+    <h3>Upload dataset</h3>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-xs-9">
+            <form action="{{ url_for('DatasetView:post') }}" method="post" role="form">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.name) }}
+                {{ render_field(form.url) }}
+                <input type="submit" value="Upload" class="btn btn-embossed btn-primary">
+            </form>
+        </div>
+        <div class="col-xs-3 tile">
+            <small>After you click the 'Upload' button, it will take a while until you will be able to create your first visualization.</small>
+        </div>
+    </div>
 {% endblock %}

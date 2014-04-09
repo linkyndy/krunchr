@@ -2,14 +2,15 @@
 
 {% block content %}
     {% if dataset %}
-        <p>{{ dataset.name }}, {{ dataset.url }}</p>
+        {% if visualization %}
+            <h3>{{ visualization.name }}</h3>
+
+            <hr>
+
+        {% else %}
+            <p>Invalid visualization</p>
+        {% endif %}
     {% else %}
         <p>Invalid dataset</p>
-    {% endif %}
-
-    {% if visualization %}
-        <p>{{ visualization.name }}, {{ visualization.type }}</p>
-    {% else %}
-        <p>Invalid visualization</p>
     {% endif %}
 {% endblock %}
