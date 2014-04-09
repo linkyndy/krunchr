@@ -1,5 +1,5 @@
 import rethinkdb as r
-from flask import redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for
 from flask.ext.classy import FlaskView, route
 
 from visualizer import db
