@@ -25,7 +25,7 @@ class DatasetView(FlaskView):
             r.table('datasets').insert({
                 'name': form.name.data,
                 'url': form.url.data,
-                'added_at': r.time()}).run(db.conn)
+                'added_at': r.now()}).run(db.conn)
             flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
             return redirect(url_for('DatasetView:index'))
         return render_template('datasets/post.html', form=form)
@@ -46,8 +46,8 @@ class DatasetView(FlaskView):
                 'name': form.name.data,
                 'type': form.type.data,
                 'dataset_id': ds_id,
-                'added_at': r.time()}).run(db.conn)
             flash('Your visualization is being prepared, wait a while')
+                'added_at': r.now()}).run(db.conn)
             return redirect(url_for('DatasetView:get', ds_id=ds_id))
         return render_template('datasets/post_visualization.html',
             form=form, dataset=dataset)
