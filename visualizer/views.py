@@ -3,7 +3,7 @@ from flask import flash, redirect, render_template, url_for
 from flask.ext.classy import FlaskView, route
 
 from visualizer import db
-from visualizer.forms import DatasetAddForm
+from visualizer.forms import DatasetAddForm, VisualizationAddForm
 
 
 class DatasetView(FlaskView):
@@ -35,6 +35,16 @@ class DatasetView(FlaskView):
         return render_template('datasets/visualization.html',
             dataset=dataset, visualization=visualization)
 
-    @route('/<ds_id>/visualizations/<v_id>', methods=['POST'])
-    def post_visualization(self, ds_id, v_id):
-        pass
+    @route('/<ds_id>/visualizations/add', methods=['GET', 'POST'])
+    def post_visualization(self, ds_id):
+        dataset = r.table('datasets').get(ds_id).run(db.conn)
+        form = VisualizationAddForm()
+        if form.validate_on_submit():
+            r.table('visualizations').insert({
+                'name': form.name.data,
+                'type': form.type.data,
+                'dataset_id': ds_id}).run(db.conn)
+            flash('Your visualization is being prepared, wait a while')
+            return redirect(url_for('DatasetView:get', ds_id=ds_id))
+        return render_template('datasets/post_visualization.html',
+            form=form, dataset=dataset)

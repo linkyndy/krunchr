@@ -1,0 +1,11 @@
+{% extends "layouts/base.html" %}
+{% from "helpers.html" import render_field %}
+
+{% block content %}
+    <form action="{{ url_for('DatasetView:post_visualization', ds_id=dataset.id) }}" method="post">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.type) }}
+        <input type="submit" value="Add visualization">
+    </form>
+{% endblock %}
