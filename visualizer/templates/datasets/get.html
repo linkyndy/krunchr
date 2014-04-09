@@ -8,6 +8,7 @@
         {% if visualizations %}
             {% for visualization in visualizations %}
                 {{ visualization.name }}
+                <a href="{{ url_for('DatasetView:get_visualization', ds_id=dataset.id, v_id=visualization.id) }}">View</a>
             {% endfor %}
         {% endif %}
         {% if 'fields' in dataset %}
