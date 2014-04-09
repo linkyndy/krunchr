@@ -46,8 +46,8 @@ class DatasetView(FlaskView):
                 'name': form.name.data,
                 'type': form.type.data,
                 'dataset_id': ds_id,
-            flash('Your visualization is being prepared, wait a while')
                 'added_at': r.now()}).run(db.conn)
+            flash('Your visualization is being prepared, wait a while', 'success')
             return redirect(url_for('DatasetView:get', ds_id=ds_id))
         return render_template('datasets/post_visualization.html',
             form=form, dataset=dataset)
