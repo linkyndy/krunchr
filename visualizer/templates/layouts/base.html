@@ -30,8 +30,8 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-02">
                 <ul class="nav navbar-nav">
-                    {% for endpoint, label in [('DatasetView:index', 'Datasets')] %}
-                        <li{% if endpoint == request.endpoint %} class="active"{% endif %}><a href="{{ url_for(endpoint) }}">{{ label }}</a></li>
+                    {% for endpoint_class, label in [('DatasetView', 'Datasets')] %}
+                        <li{% if endpoint_class in request.endpoint %} class="active"{% endif %}><a href="{{ url_for(endpoint_class+':index') }}">{{ label }}</a></li>
                     {% endfor %}
                 </ul>
             </div><!-- /.navbar-collapse -->
