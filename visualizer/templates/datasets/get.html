@@ -3,6 +3,13 @@
 {% block content %}
     {% if dataset %}
         <p>{{ dataset.name }}, {{ dataset.url }}</p>
+
+        <h3>Visualizations</h3>
+        {% if visualizations %}
+            {% for visualization in visualizations %}
+                {{ visualization.name }}
+            {% endfor %}
+        {% endif %}
         {% if 'fields' in dataset %}
             <a href="{{ url_for('DatasetView:post_visualization', ds_id=dataset.id) }}">Add visualization</a>
         {% else %}

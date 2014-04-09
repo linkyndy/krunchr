@@ -13,7 +13,10 @@ class DatasetView(FlaskView):
 
     def get(self, ds_id):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
-        return render_template('datasets/get.html', dataset=dataset)
+        visualizations = list(r.table('visualizations').filter(
+            {'dataset_id': ds_id}).run(db.conn))
+        return render_template('datasets/get.html',
+            dataset=dataset, visualizations=visualizations)
 
     @route('/add', methods=['GET', 'POST'])
     def post(self):
@@ -24,14 +27,6 @@ class DatasetView(FlaskView):
             flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
             return redirect(url_for('DatasetView:index'))
         return render_template('datasets/post.html', form=form)
-
-    @route('/<ds_id>/visualizations')
-    def visualizations(self, ds_id):
-        dataset = r.table('datasets').get(ds_id).run(db.conn)
-        visualizations = list(r.table('visualizations').filter(
-            {'dataset_id': ds_id}).run(db.conn))
-        return render_template('datasets/visualizations.html',
-            dataset=dataset, visualizations=visualizations)
 
     @route('/<ds_id>/visualizations/<v_id>')
     def visualization(self, ds_id, v_id):
