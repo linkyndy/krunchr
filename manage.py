@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import rethinkdb as r
 from rethinkdb.errors import RqlRuntimeError
 
