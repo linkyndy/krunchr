@@ -8,13 +8,13 @@ from visualizer.forms import DatasetAddForm, VisualizationAddForm
 
 class DatasetView(FlaskView):
     def index(self):
-        datasets = list(r.table('datasets').run(db.conn))
+        datasets = list(r.table('datasets').order_by(r.desc('added_at')).run(db.conn))
         return render_template('datasets/index.html', datasets=datasets)
 
     def get(self, ds_id):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
         visualizations = list(r.table('visualizations').filter(
-            {'dataset_id': ds_id}).run(db.conn))
+            {'dataset_id': ds_id}).order_by(r.desc('added_at')).run(db.conn))
         return render_template('datasets/get.html',
             dataset=dataset, visualizations=visualizations)
 
@@ -22,8 +22,10 @@ class DatasetView(FlaskView):
     def post(self):
         form = DatasetAddForm()
         if form.validate_on_submit():
-            r.table('datasets').insert(
-                {'name': form.name.data, 'url': form.url.data}).run(db.conn)
+            r.table('datasets').insert({
+                'name': form.name.data,
+                'url': form.url.data,
+                'added_at': r.time()}).run(db.conn)
             flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
             return redirect(url_for('DatasetView:index'))
         return render_template('datasets/post.html', form=form)
@@ -43,7 +45,8 @@ class DatasetView(FlaskView):
             r.table('visualizations').insert({
                 'name': form.name.data,
                 'type': form.type.data,
-                'dataset_id': ds_id}).run(db.conn)
+                'dataset_id': ds_id,
+                'added_at': r.time()}).run(db.conn)
             flash('Your visualization is being prepared, wait a while')
             return redirect(url_for('DatasetView:get', ds_id=ds_id))
         return render_template('datasets/post_visualization.html',
