@@ -21,6 +21,7 @@ class DatasetView(FlaskView):
         if form.validate_on_submit():
             r.table('datasets').insert(
                 {'name': form.name.data, 'url': form.url.data}).run(db.conn)
+            flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
             return redirect(url_for('DatasetView:index'))
         return render_template('datasets/post.html', form=form)
 

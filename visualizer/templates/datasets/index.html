@@ -3,9 +3,11 @@
 {% block content %}
     {% if datasets %}
         {% for dataset in datasets %}
-            <p>{{ dataset.name }}</p>
+            {{ dataset.name }}
+            <a href="{{ url_for('DatasetView:get', ds_id=dataset.id) }}">View dataset</a>
         {% endfor %}
     {% else %}
-        <p>No datasets</p>
+        No datasets
     {% endif %}
+    <a href="{{ url_for('DatasetView:post') }}">Add dataset</a>
 {% endblock %}
