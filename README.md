@@ -39,13 +39,13 @@ Setup
 * Create the necessary tables for the database:
 
     ```bash
-    python <path-to-repo>/manage.py create_db
+    <path-to-repo>/manage.py create_db
     ```
 
 * Start the dev server:
 
     ```bash
-    python <path-to-repo>/manage.py runserver
+    <path-to-repo>/manage.py runserver
     ```
 
 * Go rock those datasets!
