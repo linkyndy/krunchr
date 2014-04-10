@@ -32,6 +32,7 @@ String.prototype.repeat = function(num) {
     });
 
     // Custom Selects
+    $("select").selectpicker({style: 'btn-inverse', menuStyle: 'dropdown-inverse'});
     $("select[name='huge']").selectpicker({style: 'btn-hg btn-primary', menuStyle: 'dropdown-inverse'});
     $("select[name='herolist']").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
     $("select[name='info']").selectpicker({style: 'btn-info'});

@@ -1,7 +1,11 @@
 {% macro render_field(field) %}
     <div class="form-group{% if field.errors %} has-error{% endif %}">
         <label class="control-label" for="{{ field.name }}-field">{{ field.label }}</label>
-        {{ field(id=field.name+"-field", class="form-control") }}
+        {% if field.type == "SelectField" %}
+            {{ field(id=field.name+"-field", class="select-block") }}
+        {% else %}
+            {{ field(id=field.name+"-field", class="form-control") }}
+        {% endif %}
         {% if field.errors %}
             <div class="help-block">
                 {% for error in field.errors %}
