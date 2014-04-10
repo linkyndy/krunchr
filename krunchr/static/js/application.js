@@ -7,7 +7,7 @@ String.prototype.repeat = function(num) {
 (function($) {
 
   // Add segments to a slider
-  $.fn.addSliderSegments = function (amount, orientation) {    
+  $.fn.addSliderSegments = function (amount, orientation) {
     return this.each(function () {
       if (orientation == "vertical") {
         var output = ''
@@ -25,14 +25,13 @@ String.prototype.repeat = function(num) {
   };
 
   $(function() {
-  
+
     // Todo list
     $(".todo").on('click', 'li', function() {
       $(this).toggleClass("todo-done");
     });
 
     // Custom Selects
-    $("select").selectpicker({style: 'btn-inverse', menuStyle: 'dropdown-inverse'});
     $("select[name='huge']").selectpicker({style: 'btn-hg btn-primary', menuStyle: 'dropdown-inverse'});
     $("select[name='herolist']").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
     $("select[name='info']").selectpicker({style: 'btn-info'});
@@ -105,11 +104,11 @@ String.prototype.repeat = function(num) {
         "North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina",
         "South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
       });
-    }  
+    }
 
     // make code pretty
     window.prettyPrint && prettyPrint();
-    
+
     if ($("#pie").length) {
       var ctx = $("#pie").get(0).getContext("2d");
       ctx.canvas.height = ctx.canvas.width = $("#pie").parent().width()
@@ -140,5 +139,5 @@ String.prototype.repeat = function(num) {
 
 
   });
-  
+
 })(jQuery);
