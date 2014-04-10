@@ -36,7 +36,7 @@ class DatasetView(FlaskView):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
         visualization = r.table('visualizations').get(v_id).run(db.conn)
         return render_template('datasets/get_visualization.html',
-            dataset=dataset, visualization=visualization)
+            dataset=dataset, visualization=visualization, data=[])
 
     @route('/<ds_id>/visualizations/add', methods=['GET', 'POST'])
     def post_visualization(self, ds_id):
