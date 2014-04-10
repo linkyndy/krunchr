@@ -30,6 +30,25 @@
                 {% else %}
                     <p>There is no data to display</p>
                 {% endif %}
+            {% elif visualization.type == 'pie' %}
+                {% if data and canvas_data %}
+                    <div class="col-xs-6">
+                        <canvas id="pie" data-data='{{ canvas_data|tojson }}'></canvas>
+                    </div>
+                    <div class="col-xs-3 col-xs-offset-3">
+                        {% for item in data %}
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    <span class="fui-checkbox-unchecked turquoise"></span>
+                                    {{ item.color }}
+                                </dt>
+                                <dd>{{ item.value }}</dd>
+                            </dl>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>There is no data to display</p>
+                {% endif %}
             {% endif %}
         {% else %}
             <p>Invalid visualization</p>

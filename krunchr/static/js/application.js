@@ -110,6 +110,20 @@ String.prototype.repeat = function(num) {
     // make code pretty
     window.prettyPrint && prettyPrint();
     
+    if ($("#pie").length) {
+      var ctx = $("#pie").get(0).getContext("2d");
+      ctx.canvas.height = ctx.canvas.width = $("#pie").parent().width()
+      var pie = new Chart(ctx).Pie($("#pie").data("data"), {})
+
+      $(window).resize(function() {
+        clearTimeout(resizeTimer)
+        var resizeTimer = setTimeout(function() {
+          ctx.canvas.height = ctx.canvas.width = $("#pie").parent().width()
+          pie = new Chart(ctx).Pie($("#pie").data("data"), {})
+        }, 500)
+      })
+    }
+
   });
   
 })(jQuery);
