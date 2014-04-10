@@ -124,6 +124,21 @@ String.prototype.repeat = function(num) {
       })
     }
 
+    if ($("#doughnut").length) {
+      var ctx = $("#doughnut").get(0).getContext("2d");
+      ctx.canvas.height = ctx.canvas.width = $("#doughnut").parent().width()
+      var doughnut = new Chart(ctx).Doughtnut($("#doughnut").data("data"), {})
+
+      $(window).resize(function() {
+        clearTimeout(resizeTimer)
+        var resizeTimer = setTimeout(function() {
+          ctx.canvas.height = ctx.canvas.width = $("#doughnut").parent().width()
+          doughnut = new Chart(ctx).Doughnut($("#doughnut").data("data"), {})
+        }, 500)
+      })
+    }
+
+
   });
   
 })(jQuery);
