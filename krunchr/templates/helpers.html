@@ -1,8 +1,13 @@
 {% macro render_field(field) %}
     <div class="form-group{% if field.errors %} has-error{% endif %}">
         <label class="control-label" for="{{ field.name }}-field">{{ field.label }}</label>
+        <span class="help-block">
+            {{ field.description }}
+        </span>
         {% if field.type == "SelectField" %}
             {{ field(id=field.name+"-field", class="select-block") }}
+        {% elif field.type == "TextAreaField" %}
+            {{ field(id=field.name+"-field", class="form-control", rows="10") }}
         {% else %}
             {{ field(id=field.name+"-field", class="form-control") }}
         {% endif %}

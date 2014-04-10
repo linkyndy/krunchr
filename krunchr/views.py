@@ -1,3 +1,4 @@
+import re
 import rethinkdb as r
 from flask import flash, redirect, render_template, url_for
 from flask.ext.classy import FlaskView, route
@@ -40,12 +41,26 @@ class DatasetView(FlaskView):
     @route('/<ds_id>/visualizations/add', methods=['GET', 'POST'])
     def post_visualization(self, ds_id):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
+        avlb_fields = [field['name'] for field in dataset['fields']]
+
         form = VisualizationAddForm()
+        form.dataset = dataset
+        form.fields.description = 'Available fields: %s' % ', '.join(avlb_fields)
+
         if form.validate_on_submit():
+            fields = []
+            for line in form.fields.data.splitlines():
+                m = re.match(r'(\w+) is (\w+) of (.*)', line)
+                fields.append({
+                    'field': m.group(1),
+                    'func': m.group(2),
+                    'fields': m.group(3).split(', ')
+                })
             r.table('visualizations').insert({
                 'name': form.name.data,
                 'type': form.type.data,
                 'dataset_id': ds_id,
+                'fields': fields,
                 'added_at': r.now()}).run(db.conn)
             flash('Your visualization is being prepared, wait a while', 'success')
             return redirect(url_for('DatasetView:get', ds_id=ds_id))
