@@ -4,7 +4,7 @@ import rethinkdb as r
 from rethinkdb.errors import RqlRuntimeError
 
 from flask.ext.script import Manager, Server
-from visualizer import app, db
+from krunchr import app, db
 
 
 manager = Manager(app)

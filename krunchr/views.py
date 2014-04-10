@@ -2,8 +2,8 @@ import rethinkdb as r
 from flask import flash, redirect, render_template, url_for
 from flask.ext.classy import FlaskView, route
 
-from visualizer import db
-from visualizer.forms import DatasetAddForm, VisualizationAddForm
+from krunchr import db
+from krunchr.forms import DatasetAddForm, VisualizationAddForm
 
 
 class DatasetView(FlaskView):

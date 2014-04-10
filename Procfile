@@ -1,1 +1,1 @@
-web: gunicorn visualizer:app
+web: gunicorn krunchr:app

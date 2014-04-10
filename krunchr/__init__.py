@@ -7,7 +7,7 @@ app.config.from_object('config')
 
 db = RethinkDB(app)
 
-from visualizer.views import DatasetView
+from krunchr.views import DatasetView
 DatasetView.register(app)
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
-visualizer
+krunchr
 ==========
 
-Visualizer is an online service that draws custom visualizations of fairly large data sets.
+krunchr is an online service that draws custom visualizations of fairly large data sets.
 
 Setup
 -----
@@ -18,7 +18,7 @@ Setup
     ```bash
     DEBUG=True
     RETHINKDB_AUTH=
-    RETHINKDB_DB=visualizer
+    RETHINKDB_DB=krunchr
     RETHINKDB_HOST=localhost
     RETHINKDB_PORT=28015
     ```
@@ -35,7 +35,7 @@ Setup
     rethinkdb [-d <directory-to-store-your-data>]
     ```
 
-* Open `localhost:8080` and create a database called `visualizer`
+* Open `localhost:8080` and create a database called `krunchr`
 * Create the necessary tables for the database:
 
     ```bash
