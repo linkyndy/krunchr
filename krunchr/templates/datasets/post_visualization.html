@@ -11,8 +11,11 @@
             <form action="{{ url_for('DatasetView:post_visualization', ds_id=dataset.id) }}" method="post" role="form">
                 {{ form.hidden_tag() }}
                 {{ render_field(form.name) }}
+                <hr>
                 {{ render_field(form.type) }}
+                <hr>
                 {{ render_field(form.fields) }}
+                <hr>
                 <input type="submit" value="Create" class="btn btn-embossed btn-primary">
             </form>
         </div>
