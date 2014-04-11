@@ -18,8 +18,7 @@ def create_db():
     for table in tables:
         try:
             r.table_create(table).run(db.conn)
-        except RqlRuntimeError as e:
-            print e
+        except RqlRuntimeError:
             print 'Table `%s` already exists' % table
     print 'Tables have been created.'
 
