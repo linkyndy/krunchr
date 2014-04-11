@@ -13,9 +13,9 @@ class DatasetAddForm(Form):
 
 
 class VisualizationAddForm(Form):
-    name = StringField('name', validators=[InputRequired()])
-    type = SelectField('type', choices=VISUALIZATION_TYPES.items())
-    fields = TextAreaField('fields', validators=[InputRequired()])
+    name = StringField('Name', validators=[InputRequired()])
+    type = SelectField('Type', choices=VISUALIZATION_TYPES.items())
+    fields = TextAreaField('Fields', validators=[InputRequired()])
 
     def validate_fields(self, field):
         def _validate_table_fields():
