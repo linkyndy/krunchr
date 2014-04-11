@@ -38,7 +38,9 @@ class DatasetView(FlaskView):
                                              'ds_id': ds_id,
                                              'url': form.url.data
                                          }), headers={'content-type': 'application/json'})
-                print response.content
+                response = json.loads(response.content)
+                if response['status'] != 'success':
+                  raise RuntimeError(response['message'])
             except:
                 flash('Oops, something went wrong. Please try again in a few moments', 'danger')
             else:
@@ -62,6 +64,7 @@ class DatasetView(FlaskView):
     @route('/<ds_id>/visualizations/add', methods=['GET', 'POST'])
     def post_visualization(self, ds_id):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
+        dataset['fields'] = [{'name': 'asd'}]
         avlb_fields = [field['name'] for field in dataset['fields']]
 
         form = VisualizationAddForm()
@@ -77,6 +80,7 @@ class DatasetView(FlaskView):
                     'func': m.group(2),
                     'fields': m.group(3).split(', ')
                 })
+            print form
             r.table('visualizations').insert({
                 'name': form.name.data,
                 'type': form.type.data,
