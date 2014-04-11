@@ -71,12 +71,21 @@ class DatasetView(FlaskView):
         if form.validate_on_submit():
             fields = []
             for line in form.fields.data.splitlines():
-                m = re.match(r'(\w+) is (\w+) of (.*)', line)
-                fields.append({
-                    'field': m.group(1),
-                    'func': m.group(2),
-                    'fields': m.group(3).split(', ')
-                })
+                if form.type.data == 'table':
+                    m = re.match(r'(\w+) is (\w+) of (.*)', line)
+                    fields.append({
+                        'field': m.group(1),
+                        'func': m.group(2),
+                        'fields': m.group(3).split(', ')
+                    })
+                else:
+                    m = re.match(r'(\w+) is (\w+) of (\w+) group by (\w+)', line)
+                    fields.append({
+                        'field': m.group(1),
+                        'func': m.group(2),
+                        'fields': [m.group(3)],
+                        'group_by': m.group(4)
+                    })
             visualization = r.table('visualizations').insert({
                 'name': form.name.data,
                 'type': form.type.data,
