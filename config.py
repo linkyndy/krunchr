@@ -10,3 +10,4 @@ RETHINKDB_AUTH = os.environ['RETHINKDB_AUTH']
 RETHINKDB_DB = os.environ['RETHINKDB_DB']
 
 API_DATASET_ANALYSE = 'http://batman.krunchr.net/v1/analyse/'
+API_VISUALIZATION_CREATE = 'http://batman.krunchr.net/v1/create/'

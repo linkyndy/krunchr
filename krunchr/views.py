@@ -68,13 +68,19 @@ class DatasetView(FlaskView):
                     'func': m.group(2),
                     'fields': m.group(3).split(', ')
                 })
-            r.table('visualizations').insert({
+            visualization = r.table('visualizations').insert({
                 'name': form.name.data,
                 'type': form.type.data,
                 'dataset_id': ds_id,
                 'fields': fields,
-                'added_at': r.now()}).run(db.conn)
-            flash('Your visualization is being prepared, wait a while', 'success')
+                'added_at': r.now()}, return_vals=True).run(db.conn)
+            v_id = visualization['new_val']['id']
+            try:
+                requests.post(app.config['API_VISUALIZATION_CREATE'], data={'v_id': v_id})
+            except:
+                flash('Oops, something went wrong. Please try again in a few moments', 'danger')
+            else:
+                flash('Your visualization is being prepared, wait a while', 'success')
             return redirect(url_for('DatasetView:get', ds_id=ds_id))
         return render_template('datasets/post_visualization.html',
             form=form, dataset=dataset)
