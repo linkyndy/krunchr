@@ -29,7 +29,7 @@ class DatasetView(FlaskView):
                               'added_at': r.now()}, return_vals=True).run(db.conn)
             ds_id = dataset['new_val']['id']
             try:
-                requests.get(app.config['API_DATASET_ANALYSE'], data={'ds_id': ds_id})
+                requests.post(app.config['API_DATASET_ANALYSE'], data={'ds_id': ds_id})
             except:
                 flash('Oops, something went wrong. Please try again in a few moments', 'danger')
             else:
