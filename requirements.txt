@@ -7,8 +7,10 @@ Jinja2==2.7.2
 MarkupSafe==0.19
 WTForms==1.0.5
 Werkzeug==0.9.4
+gnureadline==6.2.5
 gunicorn==18.0
 itsdangerous==0.24
 protobuf==2.5.0
+requests==2.2.1
 rethinkdb==1.12.0-0
 wsgiref==0.1.2

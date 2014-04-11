@@ -1,6 +1,6 @@
-import re
+import requests
 import rethinkdb as r
-from flask import flash, redirect, render_template, url_for
+from flask import flash, jsonify, redirect, render_template, url_for
 from flask.ext.classy import FlaskView, route
 
 from krunchr import db
@@ -23,12 +23,18 @@ class DatasetView(FlaskView):
     def post(self):
         form = DatasetAddForm()
         if form.validate_on_submit():
-            r.table('datasets').insert({
-                'name': form.name.data,
-                'url': form.url.data,
-                'added_at': r.now()}).run(db.conn)
-            flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
-            return redirect(url_for('DatasetView:index'))
+            dataset = r.table('datasets').insert({
+                              'name': form.name.data,
+                              'url': form.url.data,
+                              'added_at': r.now()}, return_vals=True).run(db.conn)
+            ds_id = dataset['newval']['id']
+            try:
+                requests.get('%s%s' % (app.config['API_DATASET_ANALYSE'], ds_id))
+            except:
+                flash('Oops, something went wrong. Please try again in a few moments', 'danger')
+            else:
+                flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
+            return redirect(url_for('DatasetView:get', ds_id=ds_id))
         return render_template('datasets/post.html', form=form)
 
     @route('/<ds_id>/visualizations/<v_id>')

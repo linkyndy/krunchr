@@ -8,3 +8,5 @@ RETHINKDB_HOST = os.environ['RETHINKDB_HOST']
 RETHINKDB_PORT = os.environ['RETHINKDB_PORT']
 RETHINKDB_AUTH = os.environ['RETHINKDB_AUTH']
 RETHINKDB_DB = os.environ['RETHINKDB_DB']
+
+API_DATASET_ANALYSE = 'http://batman.krunchr.net/v1/analyse/'
