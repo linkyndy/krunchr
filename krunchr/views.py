@@ -37,6 +37,12 @@ class DatasetView(FlaskView):
             return redirect(url_for('DatasetView:get', ds_id=ds_id))
         return render_template('datasets/post.html', form=form)
 
+    def check(self, ds_id):
+        dataset = r.table('datasets').get(ds_id).run(db.conn)
+        if 'ready' in dataset:
+            return jsonify({'ready': True})
+        return jsonify({'ready': False})
+
     @route('/<ds_id>/visualizations/<v_id>')
     def get_visualization(self, ds_id, v_id):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
