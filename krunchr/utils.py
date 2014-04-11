@@ -1,8 +1,22 @@
+# All visualization types that krunchr can currently handle
+VISUALIZATION_TYPES = {
+    'table': 'Table',
+    'pie': 'Pie chart',
+    'doughnut': 'Doughnut chart',
+}
+
+# What functions can be used when setting fields of a certain visualization type
+VISUALIZATION_FUNCS = {
+    'table': ['id', 'sum', 'concat'],
+    'pie': ['sum'],
+    'doughnut': ['sum'],
+}
+
+# What type of field can each function handle
 FUNC_TYPES = {
     'id': ['int', 'float', 'str'],
     'sum': ['int', 'float'],
     'concat': ['str'],
-    'map': ['float']
 }
 
 COLORS = {
