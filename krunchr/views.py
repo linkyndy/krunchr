@@ -1,6 +1,10 @@
+import json
+
 import requests
 import rethinkdb as r
-from flask import flash, jsonify, redirect, render_template, url_for
+
+from flask import (flash, jsonify, redirect, render_template, url_for,
+                   current_app)
 from flask.ext.classy import FlaskView, route
 
 from krunchr import db
@@ -29,7 +33,12 @@ class DatasetView(FlaskView):
                               'added_at': r.now()}, return_vals=True).run(db.conn)
             ds_id = dataset['new_val']['id']
             try:
-                requests.get(app.config['API_DATASET_ANALYSE'], data={'ds_id': ds_id})
+                response = requests.post(current_app.config['API_DATASET_ANALYSE'],
+                                         data=json.dumps({
+                                             'ds_id': ds_id,
+                                             'url': form.url.data
+                                         }), headers={'content-type': 'application/json'})
+                print response.content
             except:
                 flash('Oops, something went wrong. Please try again in a few moments', 'danger')
             else:
