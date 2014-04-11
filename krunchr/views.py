@@ -27,7 +27,7 @@ class DatasetView(FlaskView):
                               'name': form.name.data,
                               'url': form.url.data,
                               'added_at': r.now()}, return_vals=True).run(db.conn)
-            ds_id = dataset['newval']['id']
+            ds_id = dataset['new_val']['id']
             try:
                 requests.get('%s%s' % (app.config['API_DATASET_ANALYSE'], ds_id))
             except:
