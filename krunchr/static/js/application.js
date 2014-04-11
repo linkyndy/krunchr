@@ -138,7 +138,26 @@ String.prototype.repeat = function(num) {
       })
     }
 
+    if ($("#type-field").length) {
+      var help_block = $("#fields-field").siblings(".help-block")
+      var avlb_fields = help_block.html()
+      updateFieldsFieldHelpBlock(help_block, $("#type-field").val(), avlb_fields)
 
+      $("#type-field").change(function() {
+        var visualization_type = $(this).val()
+        updateFieldsFieldHelpBlock(help_block, visualization_type, avlb_fields)
+      })
+    }
   });
 
 })(jQuery);
+
+function updateFieldsFieldHelpBlock(help_block, visualization_type, avlb_fields) {
+  if (visualization_type == "table") {
+    help_block.html("<pre>Syntax allowed: {new_field} is sum|concat|id of {field}[, field]</pre><br><code>"+avlb_fields+"</code>")
+  } else if (visualization_type == "pie") {
+    help_block.html("<pre>Syntax allowed: {new_field} is sum of {field} group by {field}</pre><br><code>"+avlb_fields+"</code>")
+  } else if (visualization_type == "doughnut") {
+    help_block.html("<pre>Syntax allowed: {new_field} is sum of {field} group by {field}</pre><br><code>"+avlb_fields+"</code>")
+  }
+}
