@@ -1,6 +1,6 @@
 # All visualization types that krunchr can currently handle
 VISUALIZATION_TYPES = {
-    'table': 'Table',
+    # 'table': 'Table',
     'pie': 'Pie chart',
     'doughnut': 'Doughnut chart',
     'polar': 'Polar area chart'
@@ -8,7 +8,7 @@ VISUALIZATION_TYPES = {
 
 # What functions can be used when setting fields of a certain visualization type
 VISUALIZATION_FUNCS = {
-    'table': ['id', 'sum', 'concat'],
+    # 'table': ['id', 'sum', 'concat'],
     'pie': ['sum'],
     'doughnut': ['sum'],
     'polar': ['sum']

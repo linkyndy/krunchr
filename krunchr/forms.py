@@ -18,19 +18,19 @@ class VisualizationAddForm(Form):
     fields = TextAreaField('Fields', validators=[InputRequired()])
 
     def validate_fields(self, field):
-        def _validate_table_fields():
-            for line in field.data.splitlines():
-                m = re.match(r'(\w+) is (\w+) of (.*)', line)
-                if not m:
-                    raise ValidationError('Fields declaration is invalid')
+        # def _validate_table_fields():
+        #     for line in field.data.splitlines():
+        #         m = re.match(r'(\w+) is (\w+) of (.*)', line)
+        #         if not m:
+        #             raise ValidationError('Fields declaration is invalid')
 
-                new_field, func, fields = m.group(1), m.group(2), m.group(3).split(', ')
-                if func not in VISUALIZATION_FUNCS[visualization_type]:
-                    raise ValidationError('Function `%s` is not available to `%s` visualization type' % (func, visualization_type))
-                if not all([f in ds_field_types.keys() for f in fields]):
-                    raise ValidationError('Fields specified in `of` clause must be fields on the dataset')
-                if not all([ds_field_types[f] in FUNC_TYPES[func] for f in fields]):
-                    raise ValidationError('Fields specified in `of` clause must be of same type as used function')
+        #         new_field, func, fields = m.group(1), m.group(2), m.group(3).split(', ')
+        #         if func not in VISUALIZATION_FUNCS[visualization_type]:
+        #             raise ValidationError('Function `%s` is not available to `%s` visualization type' % (func, visualization_type))
+        #         if not all([f in ds_field_types.keys() for f in fields]):
+        #             raise ValidationError('Fields specified in `of` clause must be fields on the dataset')
+        #         if not all([ds_field_types[f] in FUNC_TYPES[func] for f in fields]):
+        #             raise ValidationError('Fields specified in `of` clause must be of same type as used function')
 
         def _validate_pie_fields():
             for line in field.data.splitlines():
@@ -52,7 +52,12 @@ class VisualizationAddForm(Form):
         _validate_polar_fields = _validate_pie_fields
 
         # Dataset fields that are available
-        ds_field_types = {f['name']: f['type'] for f in self.dataset['fields']}
+        ds_field_types = {}
+        for f in self.dataset['fields']:
+            if 'name' in f:
+                ds_field_types[f['name']] = f['type']
+            else:
+                ds_field_types[f] = 'int'
 
         # Selected visualization type
         visualization_type = self.type.data
@@ -63,3 +68,5 @@ class VisualizationAddForm(Form):
             _validate_pie_fields()
         elif visualization_type == 'doughnut':
             _validate_doughnut_fields()
+        elif visualization_type == 'polar':
+            _validate_polar_fields()
