@@ -1,4 +1,5 @@
 import re
+import json
 
 import requests
 import rethinkdb as r
@@ -36,7 +37,7 @@ class DatasetView(FlaskView):
             ds_id = dataset['new_val']['id']
             try:
                 response = requests.post(current_app.config['API_DATASET_ANALYSE'],
-                                         data={'ds_id': ds_id, 'url': form.url.data})
+                                         data=json.dumps({'ds_id': ds_id, 'url': form.url.data}))
             except:
                 pass
             #     flash('Oops, something went wrong. Please try again in a few moments', 'danger')
