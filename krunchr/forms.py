@@ -49,6 +49,7 @@ class VisualizationAddForm(Form):
                     raise ValidationError('Field specified in `group by` clause must be field on the dataset')
 
         _validate_doughnut_fields = _validate_pie_fields
+        _validate_polar_fields = _validate_pie_fields
 
         # Dataset fields that are available
         ds_field_types = {f['name']: f['type'] for f in self.dataset['fields']}

@@ -3,6 +3,7 @@ VISUALIZATION_TYPES = {
     'table': 'Table',
     'pie': 'Pie chart',
     'doughnut': 'Doughnut chart',
+    'polar': 'Polar area chart'
 }
 
 # What functions can be used when setting fields of a certain visualization type
@@ -10,6 +11,7 @@ VISUALIZATION_FUNCS = {
     'table': ['id', 'sum', 'concat'],
     'pie': ['sum'],
     'doughnut': ['sum'],
+    'polar': ['sum']
 }
 
 # What type of field can each function handle

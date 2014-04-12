@@ -138,6 +138,20 @@ String.prototype.repeat = function(num) {
       })
     }
 
+    if ($("#polar").length) {
+      var ctx = $("#polar").get(0).getContext("2d");
+      ctx.canvas.height = ctx.canvas.width = $("#polar").parent().width()
+      var polar = new Chart(ctx).PolarArea($("#polar").data("data"), {})
+
+      $(window).resize(function() {
+        clearTimeout(resizeTimer)
+        var resizeTimer = setTimeout(function() {
+          ctx.canvas.height = ctx.canvas.width = $("#polar").parent().width()
+          polar = new Chart(ctx).PolarArea($("#polar").data("data"), {})
+        }, 500)
+      })
+    }
+
     if ($("#type-field").length) {
       var help_block = $("#fields-field").siblings("span.help-block")
       var avlb_fields = help_block.html()
@@ -158,6 +172,8 @@ function updateFieldsFieldHelpBlock(help_block, visualization_type, avlb_fields)
   } else if (visualization_type == "pie") {
     help_block.html("<pre>Syntax allowed  : {new_field} is sum of {field} group by {field}<br>"+$.trim(avlb_fields)+"</pre>")
   } else if (visualization_type == "doughnut") {
+    help_block.html("<pre>Syntax allowed  : {new_field} is sum of {field} group by {field}<br>"+$.trim(avlb_fields)+"</pre>")
+  } else if (visualization_type == "polar") {
     help_block.html("<pre>Syntax allowed  : {new_field} is sum of {field} group by {field}<br>"+$.trim(avlb_fields)+"</pre>")
   }
 }
