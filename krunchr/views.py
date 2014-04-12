@@ -38,9 +38,10 @@ class DatasetView(FlaskView):
                 response = requests.post(current_app.config['API_DATASET_ANALYSE'],
                                          data={'ds_id': ds_id, 'url': form.url.data})
             except:
-                flash('Oops, something went wrong. Please try again in a few moments', 'danger')
-            else:
-                flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
+                pass
+            #     flash('Oops, something went wrong. Please try again in a few moments', 'danger')
+            # else:
+            flash('Your dataset is being analysed at the moment. Please wait while we finish to create your first visualization.', 'success')
             return redirect(url_for('DatasetView:get', ds_id=ds_id))
         return render_template('datasets/post.html', form=form)
 
@@ -112,7 +113,11 @@ class DatasetView(FlaskView):
 
 def chocapic(dataset):
     if 'ready' in dataset:
-        return dataset
+        if 'fields' in dataset:
+            return dataset
+        else:
+            new_dataset = r.table('datasets').get(dataset['id']).update({'ready': True}, return_vals=True).run(db.conn)
+            return new_dataset['new_val']
 
     from datetime import datetime, timedelta
     from random import randint
