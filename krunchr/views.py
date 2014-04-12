@@ -123,7 +123,7 @@ def chocapic(dataset):
     from random import randint
 
     added_at = datetime(dataset['added_at'].year, dataset['added_at'].month, dataset['added_at'].day, dataset['added_at'].hour+3, dataset['added_at'].minute, dataset['added_at'].second)
-    if datetime.now() - added_at > timedelta(minutes=5, seconds=randint(0, 59)):
+    if datetime.now() + timedelta(hours=3) - added_at > timedelta(minutes=5, seconds=randint(0, 59)):
         new_dataset = r.table('datasets').get(dataset['id']).update({'ready': True, 'fields': ['field_%s' % index for index in range(randint(3, 8))]}, return_vals=True).run(db.conn)
         return new_dataset['new_val']
     return dataset
@@ -138,7 +138,7 @@ def cornflakes(visualizations):
             new_visualizations.append(v)
             continue
         added_at = datetime(v['added_at'].year, v['added_at'].month, v['added_at'].day, v['added_at'].hour+3, v['added_at'].minute, v['added_at'].second)
-        if datetime.now() - added_at > timedelta(minutes=1, seconds=randint(0, 59)):
+        if datetime.now() + timedelta(hours=3) - added_at > timedelta(minutes=1, seconds=randint(0, 59)):
             nv = r.table('visualizations').get(v['id']).update({'ready': True}, return_vals=True).run(db.conn)
             new_visualizations.append(nv['new_val'])
         else:
