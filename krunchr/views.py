@@ -153,11 +153,13 @@ def goldflakes(visualization):
     data = []
     canvas_data = []
     if visualization['type'] in ['pie', 'doughnut', 'polar']:
-        nof_groups = randint(3, 10)
-        for index in range(nof_groups):
-            name = 'field_%s' % index
+        tablename = visualization['id'].replace('-', '_')
+        rows = r.table(tablename).run(db.conn)
+        # nof_groups = randint(3, 10)
+        for row in rows:
+            name = row[visualization['fields'][0]['group_by']]
             color_name = choice(COLORS.keys())
-            value = randint(index*3, index*3+30)
+            value = row[visualization['fields'][0]['fields'][0]]
             data.append({
                 'name': name,
                 'color': color_name,
