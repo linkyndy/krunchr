@@ -58,7 +58,6 @@ class DatasetView(FlaskView):
     @route('/<ds_id>/visualizations/add', methods=['GET', 'POST'])
     def post_visualization(self, ds_id):
         dataset = r.table('datasets').get(ds_id).run(db.conn)
-        dataset['fields'] = [{'name': 'asd'}]
         avlb_fields = [field['name'] for field in dataset['fields']]
 
         form = VisualizationAddForm()
