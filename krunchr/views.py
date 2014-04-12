@@ -1,5 +1,4 @@
 import re
-import json
 
 import requests
 import rethinkdb as r
@@ -35,13 +34,7 @@ class DatasetView(FlaskView):
             ds_id = dataset['new_val']['id']
             try:
                 response = requests.post(current_app.config['API_DATASET_ANALYSE'],
-                                         data=json.dumps({
-                                             'ds_id': ds_id,
-                                             'url': form.url.data
-                                         }), headers={'content-type': 'application/json'})
-                response = json.loads(response.content)
-                if response['status'] != 'success':
-                  raise RuntimeError(response['message'])
+                                         data={'ds_id': ds_id, 'url': form.url.data})
             except:
                 flash('Oops, something went wrong. Please try again in a few moments', 'danger')
             else:
@@ -75,12 +68,6 @@ class DatasetView(FlaskView):
         if form.validate_on_submit():
             fields = []
             for line in form.fields.data.splitlines():
-                m = re.match(r'(\w+) is (\w+) of (.*)', line)
-                fields.append({
-                    'field': m.group(1),
-                    'func': m.group(2),
-                    'fields': m.group(3).split(', ')
-                })
                 if form.type.data == 'table':
                     m = re.match(r'(\w+) is (\w+) of (.*)', line)
                     fields.append({
@@ -96,7 +83,6 @@ class DatasetView(FlaskView):
                         'fields': [m.group(3)],
                         'group_by': m.group(4)
                     })
-            print form
             visualization = r.table('visualizations').insert({
                 'name': form.name.data,
                 'type': form.type.data,
