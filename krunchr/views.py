@@ -157,9 +157,9 @@ def goldflakes(visualization):
         rows = r.table(tablename).run(db.conn)
         # nof_groups = randint(3, 10)
         for row in rows:
-            name = row[visualization['fields'][0]['group_by']]
+            name = row['name']
             color_name = choice(COLORS.keys())
-            value = row[visualization['fields'][0]['fields'][0]]
+            value = row['value']
             data.append({
                 'name': name,
                 'color': color_name,
